@@ -34,4 +34,9 @@ var hexplosion = {
 		this.context.stroke();
 	},
 
+	explode: function() {
+
+		this.drawHexagon(this.context,100,100,8);
+	}
+
 };
