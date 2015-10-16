@@ -20,12 +20,11 @@ var hexplosion = {
 	/**
 	 * Draw a hexagon onto the canvas
 	 *
-	 * @param ctx
 	 * @param x
 	 * @param y
 	 * @param radius
 	 */
-	drawHexagon: function (ctx, x, y, radius) {
+	drawHexagon: function (x, y, radius) {
 		var a = (Math.PI * 2)/6;
 		this.context.beginPath();
 		this.context.translate(x,y);
