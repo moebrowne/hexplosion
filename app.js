@@ -12,6 +12,9 @@ var hexplosion = {
 
 		// Get a drawing context
 		this.context = this.canvas.getContext('2d');
+
+		// Add event handlers
+		this.canvas.addEventListener('click', this.explode());
 	},
 
 	/**
