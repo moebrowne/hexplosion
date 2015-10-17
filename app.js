@@ -30,7 +30,7 @@ var hexplosion = {
 	 */
 	drawHexagon: function (x, y, radius) {
 		var a = (Math.PI * 2)/6;
-		this.context.beginPath();;
+		this.context.beginPath();
 		this.context.save();
 		this.context.translate(x,y);
 		this.context.moveTo(radius,0);
@@ -39,7 +39,8 @@ var hexplosion = {
 		}
 		this.context.closePath();
 		this.context.restore();
-		this.context.stroke();
+		this.context.fillStyle = '#FFFFFF';
+		this.context.fill();
 	},
 
 	drawRipple: function(origin, rippleI) {
