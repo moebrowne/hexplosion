@@ -8,6 +8,8 @@ var hexplosion = {
 		radius: 8,
 	},
 
+	hexagons: [],
+
 	// Set everything up
 	init: function(canvasObject) {
 
@@ -19,6 +21,24 @@ var hexplosion = {
 
 		// Add event handlers
 		this.canvas.addEventListener('click', this.explode.bind(this));
+
+		// Start drawing
+		this.drawAll();
+	},
+
+	/**
+	 * Add a new hexagon that can be drawn
+	 * @param x
+	 * @param y
+	 * @param radius
+	 */
+	addHexagon: function (x, y, radius) {
+		this.hexagons.push({
+			x: x,
+			y: y,
+			radius: radius,
+			strength: 100
+		});
 	},
 
 	/**
@@ -28,8 +48,9 @@ var hexplosion = {
 	 * @param y
 	 * @param radius
 	 */
-	drawHexagon: function (x, y, radius) {
+	drawHexagon: function (x, y, radius, strength) {
 		var a = (Math.PI * 2)/6;
+		strength = strength / 100 || 0;
 		this.context.beginPath();
 		this.context.save();
 		this.context.translate(x,y);
@@ -39,7 +60,7 @@ var hexplosion = {
 		}
 		this.context.closePath();
 		this.context.restore();
-		this.context.fillStyle = '#FFFFFF';
+		this.context.fillStyle = "rgba(255, 255, 255, " + strength + ")";
 		this.context.fill();
 	},
 
@@ -56,7 +77,7 @@ var hexplosion = {
 		var coordY = (origin.y - (radius*2) + (this.hexagon.radius * 1.5));
 
 		if (rippleI === 1) {
-			this.drawHexagon(coordX, coordY, this.hexagon.radius);
+			this.addHexagon(coordX, coordY, this.hexagon.radius);
 			return;
 		}
 
@@ -77,7 +98,7 @@ var hexplosion = {
 				var hexCoordY = (Math.cos(angleRad) * ((this.hexagon.radius * i) * 2)) + coordY;
 
 				// Actually draw it
-				this.drawHexagon(hexCoordX, hexCoordY, this.hexagon.radius);
+				this.addHexagon(hexCoordX, hexCoordY, this.hexagon.radius);
 			}
 
 			// Calculate the start position for the next face
@@ -107,6 +128,16 @@ var hexplosion = {
 		setTimeout(function() {that.drawRipple(origin, 7)}, (600));
 		setTimeout(function() {that.drawRipple(origin, 8)}, (700));
 
+	},
+
+	drawAll: function() {
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.hexagons = this.hexagons.map(function(hexagon) {
+			this.drawHexagon(hexagon.x, hexagon.y, hexagon.radius, hexagon.strength);
+			hexagon.strength = hexagon.strength > 0 ? hexagon.strength - 3 : 0;
+			return hexagon;
+		}.bind(this));
+		requestAnimationFrame(this.drawAll.bind(this));
 	}
 
 };
