@@ -16,7 +16,12 @@ class Hexplosion
 		this.context = this.canvas.getContext('2d');
 
 		// Add event handlers
-		this.canvas.addEventListener('click', this.explode.bind(this));
+		this.canvas.addEventListener('click', e => {
+		    this.explode({
+                x: e.offsetX,
+                y: e.offsetY
+            })
+        });
 
 		// Start drawing
 		this.drawAll();
@@ -109,12 +114,7 @@ class Hexplosion
 		}
 	}
 
-	explode(event) {
-
-		const origin  = {
-			x: event.offsetX,
-			y: event.offsetY
-		};
+	explode(origin) {
 
 		this.drawRipple(origin, 1);
 		setTimeout(_ => {this.drawRipple(origin, 2)}, (100));
