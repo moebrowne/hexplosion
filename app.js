@@ -129,14 +129,17 @@ class Hexplosion
 
 	drawAll() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.hexagons = this.hexagons.filter(function(hexagon) {
-                    return hexagon.strength > 0;
-                });
+
+        this.hexagons = this.hexagons.filter(hexagon => {
+            return hexagon.strength > 0;
+        });
+
 		this.hexagons = this.hexagons.map(hexagon => {
 			this.drawHexagon(hexagon.x, hexagon.y, hexagon.radius, hexagon.strength);
 			hexagon.strength = hexagon.strength > 0 ? hexagon.strength - 3 : 0;
 			return hexagon;
 		});
+
 		requestAnimationFrame(_ => this.drawAll());
 	}
 }
