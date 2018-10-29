@@ -23,9 +23,16 @@ class Hexplosion
             })
         });
 
+		this.resizeCanvas();
+
 		// Start drawing
 		this.drawAll();
 	}
+
+	resizeCanvas() {
+        this.canvas.width = document.body.clientWidth;
+        this.canvas.height = document.body.clientHeight;
+    }
 
 	/**
 	 * Add a new hexagon that can be drawn

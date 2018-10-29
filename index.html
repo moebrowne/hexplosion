@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <title>Grid Render</title>
     <style type="text/css">
+        html,
         body {
             margin: 0;
-            padding: 0;
-            min-width: 100%;
-            min-height: 100%;
+            height: 100%;
             background-color: #017DBD;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
 
-<canvas id="cont" width="1200" height="900"></canvas>
+<canvas id="cont"></canvas>
 
 <script src="app.js"></script>
 
 <script>
-    new Hexplosion(document.getElementById("cont"));
+    const hexplosion = new Hexplosion(document.getElementById("cont"));
+    document.addEventListener('resize', e => hexplosion.resizeCanvas());
 </script>
 
 </body>
