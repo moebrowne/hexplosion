@@ -5,6 +5,7 @@ class Hexplosion
 
         this.hexagon = {
             radius: 8,
+			rippleSize: 8
         };
 
         this.hexagons = [];
@@ -27,6 +28,22 @@ class Hexplosion
 
 		// Start drawing
 		this.drawAll();
+	}
+
+	/**
+	 * Changes hexagon radius
+	 * @param radius
+	 */
+	setRadius(radius) {
+		this.hexagon.radius = radius;
+	}
+
+	/**
+	 * Changes ripple size
+	 * @param size
+	 */
+	setRippleSize(size) {
+		this.hexagon.rippleSize = size;
 	}
 
 	resizeCanvas() {
@@ -122,16 +139,11 @@ class Hexplosion
 	}
 
 	explode(origin) {
-
+		
 		this.drawRipple(origin, 1);
-		setTimeout(_ => {this.drawRipple(origin, 2)}, (100));
-		setTimeout(_ => {this.drawRipple(origin, 3)}, (200));
-		setTimeout(_ => {this.drawRipple(origin, 4)}, (300));
-		setTimeout(_ => {this.drawRipple(origin, 5)}, (400));
-		setTimeout(_ => {this.drawRipple(origin, 6)}, (500));
-		setTimeout(_ => {this.drawRipple(origin, 7)}, (600));
-		setTimeout(_ => {this.drawRipple(origin, 8)}, (700));
-
+		for (let rippleIndex = 1; rippleIndex < this.hexagon.rippleSize; rippleIndex++) {	
+			setTimeout(_ => {this.drawRipple(origin, rippleIndex+1)}, (rippleIndex*100));
+		}
 	}
 
 	drawAll() {
