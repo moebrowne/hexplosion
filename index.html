@@ -1,28 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Grid Render</title>
     <style type="text/css">
-        html,
-        body {
-            margin: 0;
-            height: 100%;
-            background-color: #017DBD;
-            overflow: hidden;
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background-color: #017dbd;
+        overflow: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .control-panel {
+        background-color: white;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding: 1rem;
+        border-bottom:5px ridge #020D78;
+
+        .controls {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 1rem;
+
+          .preference {
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            margin: 0 1rem;
+
+            input {
+                font-size: 1rem;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: 2px solid #020D78;
+            }
+          }
         }
+
+        .applybtn {
+            border: none;
+            height: 2rem;
+            background-color: #017dbd;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+            box-shadow: 5px 5px #020D78;
+        }
+        .applybtn:active {
+            translate: 5px 5px;
+            box-shadow: none;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="hexplosion">
+      <div class="control-panel">
+        <div class="controls">
+            <div class="preference">
+              <label>Hexagon size</label>
+              <input id="radius" placeholder="Hexagon size" value="8" />
+            </div>
+            <div class="preference">
+                <label>Ripple size</label>
+                <input id="ripple" placeholder="Ripple size" value="8" />
+              </div>
+          </div>
+        <button class="applybtn" onclick="applyChanges()">Apply Changes</button>
+      </div>
+      <canvas id="cont"></canvas>
+    </div>
 
-<canvas id="cont"></canvas>
+    <script src="app.js"></script>
 
-<script src="app.js"></script>
+    <script>
+      function isNumeric(value) {
+        return /^-?\d+$/.test(value);
+      }
 
-<script>
-    const hexplosion = new Hexplosion(document.getElementById("cont"));
-    document.addEventListener('resize', e => hexplosion.resizeCanvas());
-</script>
+      const hexplosion = new Hexplosion(document.getElementById("cont"));
+      document.addEventListener("resize", (e) => hexplosion.resizeCanvas());
 
-</body>
+      function applyChanges() {
+        let hexSize = document.getElementById("radius").value;
+        let rippleSize = document.getElementById("ripple").value;
+        if (isNumeric(hexSize) && isNumeric(rippleSize)) {
+          hexSize = parseInt(hexSize, 10);
+          rippleSize = parseInt(rippleSize, 10);
+          hexplosion.setRadius(hexSize);
+          hexplosion.setRippleSize(rippleSize);
+        }
+      }
+    </script>
+  </body>
 </html>
