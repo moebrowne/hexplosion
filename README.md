@@ -1,1 +1,3 @@
 # Hexplosion
+
+![Example](example.png)
